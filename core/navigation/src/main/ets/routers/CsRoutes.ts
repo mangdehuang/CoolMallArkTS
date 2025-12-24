@@ -3,5 +3,8 @@
  * @author Joker.X
  */
 export const CsRoutes = {
+  /**
+   * 客服聊天路由
+   */
   Chat: "cs/chat"
 };

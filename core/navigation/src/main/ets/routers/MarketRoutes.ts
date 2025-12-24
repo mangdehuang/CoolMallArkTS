@@ -3,5 +3,8 @@
  * @author Joker.X
  */
 export const MarketRoutes = {
+  /**
+   * 优惠券管理路由
+   */
   Coupon: "market/coupon"
 };

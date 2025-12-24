@@ -1,3 +1,4 @@
+import { MainPage } from 'main';
 import { RouteBuild, NAV_PATH_STACK_KEY, setNavPathStack } from 'navigation';
 
 /**
@@ -34,6 +35,7 @@ export struct NavigationHost {
    */
   build() {
     Navigation(this.navPathStack) {
+      MainPage()
     }
     .hideTitleBar(true)
     .mode(NavigationMode.Stack)

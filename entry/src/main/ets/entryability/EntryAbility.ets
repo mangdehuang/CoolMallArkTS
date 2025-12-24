@@ -2,6 +2,7 @@ import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.Ab
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { IBestInit, IBestSetUIBaseStyle } from 'ui';
+import { MainGraph } from 'main';
 
 const DOMAIN = 0x0000;
 
@@ -83,5 +84,6 @@ export default class EntryAbility extends UIAbility {
    * 注册路由
    */
   registerRouter() {
+    new MainGraph().register();
   }
 }
