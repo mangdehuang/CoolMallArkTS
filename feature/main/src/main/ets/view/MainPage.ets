@@ -42,32 +42,23 @@ export struct MainPage {
       index: this.vm.currentPageIndex,
       barPosition: BarPosition.End
     }) {
-      TabContent() {
-        this.renderTabContent(0);
-      }
-      .tabBar(this.renderTabBar(this.vm.tabItems[0], 0));
-
-      TabContent() {
-        this.renderTabContent(1);
-      }
-      .tabBar(this.renderTabBar(this.vm.tabItems[1], 1));
-
-      TabContent() {
-        this.renderTabContent(2);
-      }
-      .tabBar(this.renderTabBar(this.vm.tabItems[2], 2));
-
-      TabContent() {
-        this.renderTabContent(3);
-      }
-      .tabBar(this.renderTabBar(this.vm.tabItems[3], 3));
+      ForEach(this.vm.tabItems, (tabItem: IMainTabItem, index: number) => {
+        TabContent() {
+          this.renderTabContent(index);
+        }
+        .tabBar(this.renderTabBar(tabItem, index));
+      }, (_: IMainTabItem, index: number) => index.toString());
     }
+    .cachedMaxCount(this.vm.tabItems.length, TabsCacheMode.CACHE_BOTH_SIDE)
     .barMode(BarMode.Fixed)
     .scrollable(true)
     .width(P100)
     .height(P100)
     .onChange((index: number) => {
-      this.vm.handleTabChanged(index);
+      this.vm.updateCurrentPage(index);
+    })
+    .onAnimationStart((index: number, targetIndex: number, event: TabsAnimationEvent) => {
+      this.vm.playSelectedAnimation(targetIndex);
     });
   }
 

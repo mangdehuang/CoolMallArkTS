@@ -116,7 +116,7 @@ export default class MainViewModel extends BaseViewModel {
    * @param {number} index - 选中的 Tab 索引
    * @returns {void} 无返回值
    */
-  private playSelectedAnimation(index: number): void {
+  playSelectedAnimation(index: number): void {
     this.lottieControllers.forEach((controller: LottieController, controllerIndex: number) => {
       if (controllerIndex === index) {
         controller.stop();
