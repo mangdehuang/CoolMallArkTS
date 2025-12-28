@@ -1,4 +1,4 @@
-import { LottieView } from "@ohos/lottie-turbo";
+import { Lottie } from "@jjr/lottie_component_v2";
 import { AppNavDestination } from "ui";
 import MainViewModel from "../viewmodel/MainViewModel";
 import { HomePage } from "./HomePage";
@@ -96,12 +96,11 @@ export struct MainPage {
   @Builder
   private tabBarItem(index: number) {
     ColumnCenter() {
-      LottieView({
-        lottieId: `main_tab_${index}`,
+      Lottie({
         loop: false,
-        autoplay: this.vm.currentPageIndex === index,
+        autoPlay: this.vm.currentPageIndex === index,
         controller: this.vm.lottieControllers[index],
-        path: this.vm.tabItems[index].animation
+        animationData: this.vm.tabItems[index].animationData
       })
         .attributeModifier(size(bp({
           sm: 24,

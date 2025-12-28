@@ -1,6 +1,8 @@
-import { LottieController } from "@ohos/lottie-turbo";
+import { LottieController } from "@jjr/lottie_component_v2";
 import { BaseViewModel } from "base";
 import { MainTabItem } from "../model/MainTabItem";
+import { ContextUtil } from "util";
+import { util } from "@kit.ArkTS";
 
 /**
  * @file 主页面 ViewModel
@@ -17,15 +19,26 @@ export default class MainViewModel extends BaseViewModel {
    * 底部 Tab 配置
    */
   readonly tabItems: Array<MainTabItem> = [
-    { title: $r("app.string.home"), animation: $rawfile("home.json") },
-    { title: $r("app.string.category"), animation: $rawfile("category.json") },
-    { title: $r("app.string.cart"), animation: $rawfile("cart.json") },
-    { title: $r("app.string.me"), animation: $rawfile("me.json") }
+    { title: $r("app.string.home"), animationData: this.getRawFileAnimationData("home.json") },
+    { title: $r("app.string.category"), animationData: this.getRawFileAnimationData("category.json") },
+    { title: $r("app.string.cart"), animationData: this.getRawFileAnimationData("cart.json") },
+    { title: $r("app.string.me"), animationData: this.getRawFileAnimationData("me.json") }
   ];
   /**
    * 每个 Tab 对应的 Lottie 控制器
    */
   readonly lottieControllers: Array<LottieController> = this.createLottieControllers();
+
+  /**
+   * 从 rawfile 资源文件夹中获取 json 动画对象
+   * @param path 资源文件路径
+   */
+  getRawFileAnimationData(path: string): Object {
+    const context: Context = ContextUtil.getUIAbilityCtx();
+    const data: Uint8Array = context.resourceManager.getRawFileContentSync(path)
+    const decoder = util.TextDecoder.create('utf-8', { ignoreBOM: true })
+    return JSON.parse(decoder.decodeToString(data))
+  }
 
   /**
    * 更新当前页面索引

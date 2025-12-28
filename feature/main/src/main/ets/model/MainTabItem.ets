@@ -10,5 +10,5 @@ export interface MainTabItem {
   /**
    * 动画资源
    */
-  animation: Resource;
+  animationData: Object;
 }
