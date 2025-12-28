@@ -75,28 +75,46 @@ export struct BaseNetWorkListView {
    * @returns {void} 无返回值
    */
   build() {
-    if (this.uiState === BaseNetWorkListUiState.LOADING) {
-      if (this.loadingBuilder) {
-        this.loadingBuilder();
-      } else {
-        this.buildDefaultLoading();
+    Stack() {
+      Column() {
+        if (this.loadingBuilder) {
+          this.loadingBuilder();
+        } else {
+          this.buildDefaultLoading();
+        }
       }
-    } else if (this.uiState === BaseNetWorkListUiState.ERROR) {
-      if (this.errorBuilder) {
-        this.errorBuilder();
-      } else {
-        this.buildDefaultError();
+      .opacity(this.uiState === BaseNetWorkListUiState.LOADING ? 1 : 0)
+      .animation({ duration: 200, curve: Curve.EaseInOut });
+
+      Column() {
+        if (this.errorBuilder) {
+          this.errorBuilder();
+        } else {
+          this.buildDefaultError();
+        }
       }
-    } else if (this.uiState === BaseNetWorkListUiState.EMPTY) {
-      if (this.emptyBuilder) {
-        this.emptyBuilder();
-      } else {
-        this.buildDefaultEmpty();
+      .opacity(this.uiState === BaseNetWorkListUiState.ERROR ? 1 : 0)
+      .animation({ duration: 200, curve: Curve.EaseInOut });
+
+      Column() {
+        if (this.emptyBuilder) {
+          this.emptyBuilder();
+        } else {
+          this.buildDefaultEmpty();
+        }
       }
-    } else {
-      if (this.content) {
-        this.content();
+      .opacity(this.uiState === BaseNetWorkListUiState.EMPTY ? 1 : 0)
+      .animation({ duration: 200, curve: Curve.EaseInOut });
+
+      Column() {
+        if (this.content) {
+          this.content();
+        }
       }
+      .opacity(this.uiState === BaseNetWorkListUiState.LOADING
+        || this.uiState === BaseNetWorkListUiState.ERROR
+        || this.uiState === BaseNetWorkListUiState.EMPTY ? 0 : 1)
+      .animation({ duration: 200, curve: Curve.EaseInOut });
     }
   }
 }

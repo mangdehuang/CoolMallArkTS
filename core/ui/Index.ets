@@ -21,4 +21,12 @@ export { EmptyError } from "./src/main/ets/component/empty/EmptyError";
 
 export { EmptyNetwork } from "./src/main/ets/component/empty/EmptyNetwork";
 
+export { Card } from "./src/main/ets/component/card/Card";
+
+export { TitleWithLine } from "./src/main/ets/component/title/TitleWithLine";
+
+export { NetWorkImage } from "./src/main/ets/component/image/NetWorkImage";
+
+export { GoodsListItem } from "./src/main/ets/component/goods/GoodsListItem";
+
 export * from "@ibestservices/ibest-ui-v2";

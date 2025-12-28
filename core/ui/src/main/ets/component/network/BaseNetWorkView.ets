@@ -60,22 +60,34 @@ export struct BaseNetWorkView {
    * @returns {void} 无返回值
    */
   build() {
-    if (this.uiState === BaseNetWorkUiState.LOADING) {
-      if (this.loadingBuilder) {
-        this.loadingBuilder();
-      } else {
-        this.buildDefaultLoading();
+    Stack() {
+      Column() {
+        if (this.loadingBuilder) {
+          this.loadingBuilder();
+        } else {
+          this.buildDefaultLoading();
+        }
       }
-    } else if (this.uiState === BaseNetWorkUiState.ERROR) {
-      if (this.errorBuilder) {
-        this.errorBuilder();
-      } else {
-        this.buildDefaultError();
+      .opacity(this.uiState === BaseNetWorkUiState.LOADING ? 1 : 0)
+      .animation({ duration: 200, curve: Curve.EaseInOut });
+
+      Column() {
+        if (this.errorBuilder) {
+          this.errorBuilder();
+        } else {
+          this.buildDefaultError();
+        }
       }
-    } else {
-      if (this.content) {
-        this.content();
+      .opacity(this.uiState === BaseNetWorkUiState.ERROR ? 1 : 0)
+      .animation({ duration: 200, curve: Curve.EaseInOut });
+
+      Column() {
+        if (this.content) {
+          this.content();
+        }
       }
+      .opacity(this.uiState === BaseNetWorkUiState.LOADING || this.uiState === BaseNetWorkUiState.ERROR ? 0 : 1)
+      .animation({ duration: 200, curve: Curve.EaseInOut });
     }
   }
 }

@@ -38,7 +38,7 @@ export struct HomeBanner {
               .width(P100)
               .borderRadius($r("app.float.radius_medium"))
               .objectFit(ImageFit.Contain)
-              .margin({
+              .padding({
                 right: bp({
                   sm: $r("app.float.space_padding_small"),
                   md: $r("app.float.space_padding_medium"),
@@ -65,7 +65,6 @@ export struct HomeBanner {
   private getIndicator(): DotIndicator | boolean {
     if (this.breakpointState.isXS() || this.breakpointState.isSM()) {
       return Indicator.dot()
-        .bottom($r("app.float.space_vertical_medium"))
         .color($r("app.color.bg_purple_light"))
         .selectedColor($r("app.color.primary"));
     }

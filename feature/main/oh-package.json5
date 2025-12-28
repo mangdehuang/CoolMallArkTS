@@ -15,7 +15,6 @@
     "designsystem": "file:../../core/designsystem",
     "ui": "file:../../core/ui",
     "util": "file:../../core/util",
-    "@ohos/lottie-turbo": "^1.0.5",
     "@jjr/lottie_component_v2": "1.0.1",
   },
   "devDependencies": {},

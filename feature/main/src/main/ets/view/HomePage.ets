@@ -1,5 +1,8 @@
-import { AppNavDestination, BaseNetWorkListView, RefreshLayout } from "ui";
+import { AppNavDestination, BaseNetWorkListView, GoodsListItem, RefreshLayout, TitleWithLine } from "ui";
+import { Goods } from "model";
 import { HomeBanner } from "../component/HomeBanner";
+import { HomeCouponSection } from "../component/HomeCouponSection";
+import { HomeTopBar } from "../component/HomeTopBar";
 import HomeViewModel from "../viewmodel/HomeViewModel";
 
 /**
@@ -13,6 +16,10 @@ export struct HomePage {
    */
   @Local
   private vm: HomeViewModel = new HomeViewModel();
+  /**
+   * 列表滚动控制器，用于刷新同步
+   */
+  private listScroller: Scroller = new Scroller();
 
   /**
    * 构建首页
@@ -20,11 +27,13 @@ export struct HomePage {
    */
   build() {
     AppNavDestination({
-      viewModel: this.vm
+      viewModel: this.vm,
+      hideTitleBar: true,
     }) {
+      HomeTopBar();
       BaseNetWorkListView({
         uiState: this.vm.uiState,
-        onRetry: (): void => this.vm.loadHomeData(),
+        onRetry: (): void => this.vm.retryRequest(),
         content: (): void => this.HomeContent()
       });
     }
@@ -39,17 +48,38 @@ export struct HomePage {
     RefreshLayout({
       loading: this.vm.isLoading,
       isEnableSlideUp: this.vm.isEnableSlideUp,
+      scroller: this.listScroller,
       onRefresh: (direction): void => this.vm.onRefreshDirection(direction),
     }) {
-      List() {
-        if ((this.vm.pageData.banner ?? []).length > 0) {
-          ListItem() {
-            HomeBanner({
-              bannerList: this.vm.pageData.banner ?? [],
-            });
-          }
+      List({ space: 12, scroller: this.listScroller }) {
+        ListItem() {
+          HomeBanner({ bannerList: this.vm.pageData.banner ?? [] });
         }
-      };
+
+        ListItem() {
+          HomeCouponSection({ coupons: this.vm.pageData.coupon ?? [] });
+        }
+
+        ListItem() {
+          TitleWithLine({ text: $r("app.string.recommend_goods") })
+        }
+
+        if (this.vm.pageData.recommend && this.vm.pageData.recommend.length > 0) {
+          ForEach(this.vm.pageData.recommend as Goods[], (item: Goods): void => {
+            ListItem() {
+              GoodsListItem({
+                goods: item,
+                onItemClick: (_id: number): void => {
+                }
+              });
+            }
+          });
+        }
+
+        ListItem() {
+          TitleWithLine({ text: $r("app.string.all_goods") })
+        }
+      }.padding($r("app.float.space_padding_medium"));
     }
   }
 }

@@ -59,6 +59,9 @@ export default class HomeViewModel extends BaseNetWorkListViewModel<Goods> {
       })
       .catch((): void => {
         this.uiState = BaseNetWorkListUiState.ERROR;
+      })
+      .finally((): void => {
+        this.isLoading = false;
       });
   }
 
@@ -70,7 +73,17 @@ export default class HomeViewModel extends BaseNetWorkListViewModel<Goods> {
     if (this.isLoading) {
       return;
     }
+    this.isLoading = true;
+    this.currentPage = 1;
+    this.loadHomeData();
+  }
 
+  /**
+   * 重试请求
+   * @returns {void} 无返回值
+   */
+  retryRequest(): void {
+    this.uiState = BaseNetWorkListUiState.LOADING;
     this.currentPage = 1;
     this.loadHomeData();
   }

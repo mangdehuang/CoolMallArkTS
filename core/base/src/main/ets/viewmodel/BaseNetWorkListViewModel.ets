@@ -73,12 +73,6 @@ export abstract class BaseNetWorkListViewModel<T> extends BaseViewModel {
   protected loadListData(): void {
     RequestHelper.repository<NetworkPageData<T>>(this.requestListData())
       .toast(this.showErrorToast)
-      .start((): void => {
-        if (this.currentPage === 1 && this.listData.length === 0) {
-          this.uiState = BaseNetWorkListUiState.LOADING;
-        }
-        this.isLoading = true;
-      })
       .execute()
       .then((data: NetworkPageData<T>): void => this.handleSuccess(data))
       .catch((err: Error): void => this.handleError(err))
@@ -130,6 +124,7 @@ export abstract class BaseNetWorkListViewModel<T> extends BaseViewModel {
    * @returns {void} 无返回值
    */
   retryRequest(): void {
+    this.uiState = BaseNetWorkListUiState.LOADING;
     this.currentPage = 1;
     this.loadListData();
   }
@@ -142,7 +137,7 @@ export abstract class BaseNetWorkListViewModel<T> extends BaseViewModel {
     if (this.isLoading) {
       return;
     }
-
+    this.isLoading = true;
     this.currentPage = 1;
     this.loadListData();
   }
