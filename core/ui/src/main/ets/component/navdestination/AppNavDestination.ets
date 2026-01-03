@@ -60,6 +60,11 @@ export struct AppNavDestination {
    */
   @Param
   windowSafeAreaState: WindowSafeAreaState = getWindowSafeAreaState();
+  /**
+   * 自定义页面内边距（默认使用安全区）
+   */
+  @Param
+  paddingValue: Padding | Length | LocalizedPadding | undefined = undefined;
 
   /**
    * 页面出现时的生命周期回调
@@ -130,11 +135,19 @@ export struct AppNavDestination {
       this.viewModel.onHidden(reason);
     })
     .backgroundColor(this.pageBackgroundColor)
-    .padding(this.safeAreaEnabled ? {
+    .padding(this.paddingValue ?? (this.safeAreaEnabled ? this.getSafeAreaPadding() : 0));
+  }
+
+  /**
+   * 获取安全区内边距
+   * @returns {Padding} 安全区内边距
+   */
+  private getSafeAreaPadding(): Padding {
+    return {
       top: this.windowSafeAreaState.topInset,
       left: this.windowSafeAreaState.leftInset,
       bottom: this.windowSafeAreaState.bottomInset,
       right: this.windowSafeAreaState.rightInset
-    } : 0);
+    };
   }
 }

@@ -28,6 +28,10 @@ export class Category {
    */
   status: number = 1;
   /**
+   * 子分类列表
+   */
+  children?: Category[] = [];
+  /**
    * 创建时间
    */
   createTime?: string | null = null;
@@ -46,6 +50,7 @@ export class Category {
     this.sortNum = init.sortNum ?? this.sortNum;
     this.pic = init.pic ?? this.pic;
     this.status = init.status ?? this.status;
+    this.children = init.children ?? this.children;
     this.createTime = init.createTime ?? this.createTime;
     this.updateTime = init.updateTime ?? this.updateTime;
   }
