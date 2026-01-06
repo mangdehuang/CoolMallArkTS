@@ -6,11 +6,11 @@
     },
     {
       "name": "welcome_login",
-      "value": "Hello,\\nWelcome to Cool Mall"
+      "value": "Hello,\nWelcome to Cool Mall"
     },
     {
       "name": "welcome_register",
-      "value": "Hello,\\nWelcome to register Cool Mall"
+      "value": "Hello,\nWelcome to register Cool Mall"
     },
     {
       "name": "phone_hint",

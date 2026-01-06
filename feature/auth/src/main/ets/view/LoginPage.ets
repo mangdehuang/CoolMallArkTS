@@ -12,6 +12,7 @@ import {
 } from "designsystem";
 import { AppNavDestination, CommonIcon, IBestButton, LogoIcon } from "ui";
 import { bp } from "state";
+import { UserAgreement } from "../component/UserAgreement";
 import LoginViewModel from "../viewmodel/LoginViewModel";
 
 /**
@@ -177,30 +178,14 @@ export struct LoginPage {
    */
   @Builder
   private buildUserAgreementSection(): void {
-    Text() {
-      Span($r("app.string.login_agreement_prefix"))
-        .fontSize($r("app.float.body_medium"))
-        .fontColor($r("app.color.text_tertiary"));
-
-      Span($r("app.string.user_agreement"))
-        .fontSize($r("app.float.body_medium"))
-        .fontColor($r("app.color.primary"))
-        .onClick((): void => {
-          this.vm.onUserAgreementClick();
-        });
-
-      Span($r("app.string.and"))
-        .fontSize($r("app.float.body_medium"))
-        .fontColor($r("app.color.text_tertiary"));
-
-      Span($r("app.string.privacy_policy"))
-        .fontSize($r("app.float.body_medium"))
-        .fontColor($r("app.color.primary"))
-        .onClick((): void => {
-          this.vm.onPrivacyPolicyClick();
-        });
-    }
-    .width(P100)
-    .textAlign(TextAlign.Center);
+    UserAgreement({
+      centerAlignment: true,
+      onUserAgreementClick: (): void => {
+        this.vm.onUserAgreementClick();
+      },
+      onPrivacyPolicyClick: (): void => {
+        this.vm.onPrivacyPolicyClick();
+      }
+    });
   }
 }
