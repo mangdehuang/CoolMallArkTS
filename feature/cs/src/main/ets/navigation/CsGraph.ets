@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, CsRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { CsRoutes } from "navigation/src/main/ets/cs/CsRoutes";
 import { ChatNav } from "./ChatNav";
 
 /**

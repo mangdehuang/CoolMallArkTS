@@ -1,5 +1,6 @@
 import { P100, SpaceVerticalMedium, SpaceVerticalXLarge, SpaceVerticalXXLarge } from "designsystem";
 import { IBestButton } from "ibestui";
+import { CommonNavigator, navigateBack } from "navigation";
 import { AppNavDestination } from "ui";
 import { AnimatedAuthPage } from "../component/AnimatedAuthPage";
 import { BottomNavigationRow } from "../component/BottomNavigationRow";
@@ -110,10 +111,10 @@ export struct RegisterPage {
       UserAgreement({
         prefix: $r("app.string.register_agreement_prefix"),
         onUserAgreementClick: (): void => {
-          this.vm.onUserAgreementClick();
+          CommonNavigator.toUserAgreement();
         },
         onPrivacyPolicyClick: (): void => {
-          this.vm.onPrivacyPolicyClick();
+          CommonNavigator.toPrivacyPolicy();
         }
       });
 
@@ -133,7 +134,7 @@ export struct RegisterPage {
         messageText: $r("app.string.have_account"),
         actionText: $r("app.string.go_login"),
         onActionClick: (): void => {
-          this.vm.navigateBack();
+          navigateBack();
         }
       });
     }

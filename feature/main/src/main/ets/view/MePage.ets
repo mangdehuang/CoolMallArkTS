@@ -11,6 +11,7 @@ import {
   SpaceVerticalXSmall
 } from "designsystem";
 import { Footprint, User } from "model";
+import { GoodsNavigator, OrderNavigator, UserNavigator } from "navigation";
 import { getUserState, getWindowSafeAreaState, UserState, WindowSafeAreaState } from "state";
 import {
   AppNavDestination,
@@ -133,13 +134,13 @@ export struct MePage {
       paddingValue: {
         top: $r("app.float.space_vertical_medium"),
       },
-      onTap: (): void => this.vm.onHeadClick()
+      onTap: (): void => UserNavigator.toProfile()
     }) {
       RowStartCenter() {
         Avatar({
           src: this.getCurrentUser().avatarUrl,
           avatarSize: 68,
-          onTap: (): void => this.vm.onHeadClick()
+          onTap: (): void => UserNavigator.toProfile()
         });
 
         SpaceHorizontalLarge();
@@ -296,7 +297,7 @@ export struct MePage {
         leftIconColor: $r("app.color.main_order_icon"),
         title: $r("app.string.my_orders"),
         value: $r("app.string.view_all"),
-        onTap: (): void => this.vm.toOrderListPage()
+        onTap: (): void => OrderNavigator.toList()
       });
 
       this.buildOrderStatusRow();
@@ -379,7 +380,10 @@ export struct MePage {
       top: $r("app.float.space_vertical_medium"),
       bottom: $r("app.float.space_vertical_medium")
     })
-    .onClick((): void => this.vm.toOrderListPage(item.tabIndex));
+    .onClick((): void => {
+      const tab: string = `${item.tabIndex}`;
+      OrderNavigator.toList(tab);
+    });
   }
 
   /**
@@ -395,7 +399,7 @@ export struct MePage {
         title: $r("app.string.my_footprint"),
         value: $r("app.string.view_all"),
         hasBorder: false,
-        onTap: (): void => this.vm.toUserFootprintPage()
+        onTap: (): void => UserNavigator.toFootprint()
       });
 
       List({ space: 8 }) {
@@ -432,7 +436,7 @@ export struct MePage {
         cornerRadius: $r("app.float.radius_small")
       });
     }
-    .onClick((): void => this.vm.toGoodsDetailPage(footprint.goodsId));
+    .onClick((): void => GoodsNavigator.toDetail(footprint.goodsId));
   }
 
   /**

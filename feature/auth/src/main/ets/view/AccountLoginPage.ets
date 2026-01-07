@@ -1,5 +1,6 @@
 import { P100, SpaceVerticalMedium, SpaceVerticalSmall, SpaceVerticalXLarge, SpaceVerticalXXLarge } from "designsystem";
 import { IBestButton } from "ibestui";
+import { AuthNavigator, CommonNavigator } from "navigation";
 import { AppNavDestination } from "ui";
 import { AnimatedAuthPage } from "../component/AnimatedAuthPage";
 import { BottomNavigationRow } from "../component/BottomNavigationRow";
@@ -62,10 +63,10 @@ export struct AccountLoginPage {
 
       UserAgreement({
         onUserAgreementClick: (): void => {
-          this.vm.onUserAgreementClick();
+          CommonNavigator.toUserAgreement();
         },
         onPrivacyPolicyClick: (): void => {
-          this.vm.onPrivacyPolicyClick();
+          CommonNavigator.toPrivacyPolicy();
         }
       });
 
@@ -86,10 +87,10 @@ export struct AccountLoginPage {
         actionText: $r("app.string.forgot_password"),
         divider: true,
         onCancelClick: (): void => {
-          this.vm.toRegisterPage();
+          AuthNavigator.toRegister();
         },
         onActionClick: (): void => {
-          this.vm.toResetPasswordPage();
+          AuthNavigator.toResetPassword();
         }
       });
     }

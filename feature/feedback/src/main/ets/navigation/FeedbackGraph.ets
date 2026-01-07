@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, FeedbackRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { FeedbackRoutes } from "navigation/src/main/ets/feedback/FeedbackRoutes";
 import { FeedbackListNav } from "./FeedbackListNav";
 import { FeedbackSubmitNav } from "./FeedbackSubmitNav";
 

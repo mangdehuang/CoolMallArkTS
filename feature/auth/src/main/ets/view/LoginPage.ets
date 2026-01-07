@@ -11,6 +11,7 @@ import {
   SpaceVerticalXXLarge
 } from "designsystem";
 import { IBestButton } from "ibestui";
+import { AuthNavigator, CommonNavigator } from "navigation";
 import { AppNavDestination, CommonIcon, LogoIcon } from "ui";
 import { bp } from "state";
 import { UserAgreement } from "../component/UserAgreement";
@@ -90,7 +91,7 @@ export struct LoginPage {
       round: true,
       btnWidth: P100,
       onBtnClick: (): void => {
-        this.vm.toSmsLoginPage();
+        AuthNavigator.toSmsLogin();
       }
     });
 
@@ -104,7 +105,7 @@ export struct LoginPage {
       round: true,
       btnWidth: P100,
       onBtnClick: (): void => {
-        this.vm.toAccountLoginPage();
+        AuthNavigator.toAccountLogin();
       }
     });
 
@@ -182,10 +183,10 @@ export struct LoginPage {
     UserAgreement({
       centerAlignment: true,
       onUserAgreementClick: (): void => {
-        this.vm.onUserAgreementClick();
+        CommonNavigator.toUserAgreement();
       },
       onPrivacyPolicyClick: (): void => {
-        this.vm.onPrivacyPolicyClick();
+        CommonNavigator.toPrivacyPolicy();
       }
     });
   }

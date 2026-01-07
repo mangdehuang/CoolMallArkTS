@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, LaunchRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { LaunchRoutes } from "navigation/src/main/ets/launch/LaunchRoutes";
 import { SplashNav } from "./SplashNav";
 import { GuideNav } from "./GuideNav";
 

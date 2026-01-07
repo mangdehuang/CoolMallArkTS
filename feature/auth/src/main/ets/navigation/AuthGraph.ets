@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, AuthRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { AuthRoutes } from "navigation/src/main/ets/auth/AuthRoutes";
 import { LoginNav } from "./LoginNav";
 import { AccountLoginNav } from "./AccountLoginNav";
 import { SmsLoginNav } from "./SmsLoginNav";

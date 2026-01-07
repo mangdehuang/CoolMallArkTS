@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, MainRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { MainRoutes } from "navigation/src/main/ets/main/MainRoutes";
 import { MainNav } from "./MainNav";
 import { HomeNav } from "./HomeNav";
 import { CategoryNav } from "./CategoryNav";

@@ -1,9 +1,9 @@
-import { AuthRoutes } from "./routers/AuthRoutes";
-import { UserRoutes } from "./routers/UserRoutes";
-import { OrderRoutes } from "./routers/OrderRoutes";
-import { CsRoutes } from "./routers/CsRoutes";
-import { MarketRoutes } from "./routers/MarketRoutes";
-import { FeedbackRoutes } from "./routers/FeedbackRoutes";
+import { AuthRoutes } from "./auth/AuthRoutes";
+import { UserRoutes } from "./user/UserRoutes";
+import { OrderRoutes } from "./order/OrderRoutes";
+import { CsRoutes } from "./cs/CsRoutes";
+import { MarketRoutes } from "./market/MarketRoutes";
+import { FeedbackRoutes } from "./feedback/FeedbackRoutes";
 
 /**
  * @file 路由拦截配置（登录校验）

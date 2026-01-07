@@ -1,5 +1,6 @@
 import { P100, SpaceVerticalMedium, SpaceVerticalSmall, SpaceVerticalXLarge, SpaceVerticalXXLarge } from "designsystem";
 import { IBestButton } from "ibestui";
+import { CommonNavigator, navigateBack } from "navigation";
 import { AppNavDestination } from "ui";
 import { AnimatedAuthPage } from "../component/AnimatedAuthPage";
 import { BottomNavigationRow } from "../component/BottomNavigationRow";
@@ -77,10 +78,10 @@ export struct SmsLoginPage {
 
       UserAgreement({
         onUserAgreementClick: (): void => {
-          this.vm.onUserAgreementClick();
+          CommonNavigator.toUserAgreement();
         },
         onPrivacyPolicyClick: (): void => {
-          this.vm.onPrivacyPolicyClick();
+          CommonNavigator.toPrivacyPolicy();
         }
       });
 
@@ -100,7 +101,7 @@ export struct SmsLoginPage {
         messageText: $r("app.string.sms_not_available"),
         actionText: $r("app.string.use_third_party_login"),
         onActionClick: (): void => {
-          this.vm.navigateBack();
+          navigateBack();
         }
       });
     }

@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, CommonRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { CommonRoutes } from "navigation/src/main/ets/common/CommonRoutes";
 import { AboutNav } from "./AboutNav";
 import { WebNav } from "./WebNav";
 import { SettingsNav } from "./SettingsNav";

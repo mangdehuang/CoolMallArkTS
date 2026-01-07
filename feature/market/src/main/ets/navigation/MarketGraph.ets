@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, MarketRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { MarketRoutes } from "navigation/src/main/ets/market/MarketRoutes";
 import { CouponNav } from "./CouponNav";
 
 /**

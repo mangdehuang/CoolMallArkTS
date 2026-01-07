@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, UserRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { UserRoutes } from "navigation/src/main/ets/user/UserRoutes";
 import { ProfileNav } from "./ProfileNav";
 import { AddressListNav } from "./AddressListNav";
 import { AddressDetailNav } from "./AddressDetailNav";

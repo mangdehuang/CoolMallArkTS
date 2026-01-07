@@ -21,11 +21,6 @@ let globalNavStack: NavPathStack | undefined;
 const DOMAIN: number = 0;
 
 /**
- * 路由参数类型定义（避免使用 any/unknown）
- */
-export type NavParams = Record<string, string | number | boolean | object | null | undefined>;
-
-/**
  * 设置全局导航栈实例（在 NavigationHost aboutToAppear 中调用）
  * @param {NavPathStack} stack - 导航栈实例
  * @returns {void} 无返回值
@@ -50,10 +45,10 @@ export function getNavPathStack(): NavPathStack | undefined {
 /**
  * 路由跳转（入栈）
  * @param {string} name - 路由名称
- * @param {NavParams} [params={}] - 跳转参数
+ * @param {Any} [params] - 跳转参数
  * @returns {void} 无返回值
  */
-export function navigateTo(name: string, params: NavParams = {}): void {
+export function navigateTo(name: string, params?: Any): void {
   if (requiresLogin(name)) {
     const userState = getUserState();
     if (!userState.isLoggedIn()) {
@@ -67,9 +62,15 @@ export function navigateTo(name: string, params: NavParams = {}): void {
     return;
   }
   try {
+    if (params !== undefined) {
+      stack.pushPath({
+        name: name,
+        param: params
+      });
+      return;
+    }
     stack.pushPath({
-      name: name,
-      param: params
+      name: name
     });
   } catch (err) {
     hilog.error(DOMAIN, "NavSvc", "[NavigationService] navigateTo failed: %{public}s", JSON.stringify(err));
@@ -98,7 +99,7 @@ export function navigateBack(): void {
  * @param {boolean} [animated=true] - 是否需要动画
  * @returns {void} 无返回值
  */
-export function navigateBackWithResult(result: NavParams | object = {}, animated?: boolean): void {
+export function navigateBackWithResult(result: Any | object = {}, animated?: boolean): void {
   const stack: NavPathStack | undefined = getNavPathStack();
   if (!stack) {
     return;
@@ -131,11 +132,11 @@ export function popTo(name: string, inclusive: boolean = false): void {
 /**
  * 跳转并监听返回结果（使用 ArkUI promise 版本 pushDestinationByName）
  * @param {string} name - 路由名称
- * @param {Any} [params={}] - 跳转参数
+ * @param {Any} [params] - 跳转参数
  * @param {(info: PopInfo) => void} [onPop] - 返回结果回调（在目标页调用 pop(result) 时触发）
  * @returns {Promise<void>} 跳转完成 Promise
  */
-export function navigateToWithResult(name: string, params: NavParams = {},
+export function navigateToWithResult(name: string, params?: Any,
   onPop?: (info: PopInfo) => void): Promise<void> {
   if (requiresLogin(name)) {
     const userState = getUserState();
@@ -150,7 +151,7 @@ export function navigateToWithResult(name: string, params: NavParams = {},
     return Promise.resolve();
   }
 
-  const safeParam: Object = params as Object;
+  const safeParam: Object | undefined = params as Object | undefined;
   try {
     if (onPop) {
       return stack.pushDestinationByName(name, safeParam, onPop).catch((err: Any) => {
@@ -171,10 +172,10 @@ export function navigateToWithResult(name: string, params: NavParams = {},
  * 跳转并以 Promise 形式获取返回结果（上层可 await）
  * @template T
  * @param {string} name - 路由名称
- * @param {Any} [params={}] - 跳转参数
+ * @param {Any} [params] - 跳转参数
  * @returns {Promise<T | undefined>} 返回结果（未回传时为 undefined）
  */
-export function navigateToForResult<T>(name: string, params: NavParams = {}): Promise<T | undefined> {
+export function navigateToForResult<T>(name: string, params?: Any): Promise<T | undefined> {
   return new Promise<T | undefined>((resolve) => {
     navigateToWithResult(name, params, (info: PopInfo) => {
       resolve(info?.result as T);

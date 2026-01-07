@@ -1,7 +1,7 @@
 import { BaseViewModel } from "base";
 import { AccountStoreRepository, AuthRepository } from "data";
 import { Auth, PasswordLoginRequest } from "model";
-import { AuthRoutes, CommonRoutes, navigateBack, navigateTo } from "navigation";
+import { navigateBack } from "navigation";
 import { RequestHelper } from "result";
 import { getUserState, UserState } from "state";
 import { ContextUtil, ToastUtils, ValidationUtil } from "util";
@@ -135,37 +135,5 @@ export default class AccountLoginViewModel extends BaseViewModel {
    */
   updatePassword(value: string): void {
     this.password = value;
-  }
-
-  /**
-   * 跳转到注册页面
-   * @returns {void} 无返回值
-   */
-  toRegisterPage(): void {
-    navigateTo(AuthRoutes.Register);
-  }
-
-  /**
-   * 跳转到重置密码页面
-   * @returns {void} 无返回值
-   */
-  toResetPasswordPage(): void {
-    navigateTo(AuthRoutes.ResetPassword);
-  }
-
-  /**
-   * 打开用户协议页面
-   * @returns {void} 无返回值
-   */
-  onUserAgreementClick(): void {
-    navigateTo(CommonRoutes.UserAgreement);
-  }
-
-  /**
-   * 打开隐私政策页面
-   * @returns {void} 无返回值
-   */
-  onPrivacyPolicyClick(): void {
-    navigateTo(CommonRoutes.PrivacyPolicy);
   }
 }

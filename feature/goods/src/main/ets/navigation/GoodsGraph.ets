@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, GoodsRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { GoodsRoutes } from "navigation/src/main/ets/goods/GoodsRoutes";
 import { GoodsDetailNav } from "./GoodsDetailNav";
 import { GoodsSearchNav } from "./GoodsSearchNav";
 import { GoodsCommentNav } from "./GoodsCommentNav";

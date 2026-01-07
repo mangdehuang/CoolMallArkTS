@@ -1,5 +1,5 @@
 import { BaseViewModel } from "base";
-import { CommonRoutes, navigateBack, navigateTo } from "navigation";
+import { navigateBack } from "navigation";
 
 /**
  * @file 注册页面 ViewModel
@@ -51,29 +51,5 @@ export default class RegisterViewModel extends BaseViewModel {
    * @returns {void} 无返回值
    */
   register(): void {
-  }
-
-  /**
-   * 返回上一页
-   * @returns {void} 无返回值
-   */
-  navigateBack(): void {
-    navigateBack();
-  }
-
-  /**
-   * 打开用户协议页面
-   * @returns {void} 无返回值
-   */
-  onUserAgreementClick(): void {
-    navigateTo(CommonRoutes.UserAgreement);
-  }
-
-  /**
-   * 打开隐私政策页面
-   * @returns {void} 无返回值
-   */
-  onPrivacyPolicyClick(): void {
-    navigateTo(CommonRoutes.PrivacyPolicy);
   }
 }

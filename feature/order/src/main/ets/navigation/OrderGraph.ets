@@ -1,4 +1,5 @@
-import { RouteGraph, RouteBuild, OrderRoutes } from "navigation";
+import { RouteBuild, RouteGraph } from "navigation";
+import { OrderRoutes } from "navigation/src/main/ets/order/OrderRoutes";
 import { OrderListNav } from "./OrderListNav";
 import { OrderConfirmNav } from "./OrderConfirmNav";
 import { OrderDetailNav } from "./OrderDetailNav";
