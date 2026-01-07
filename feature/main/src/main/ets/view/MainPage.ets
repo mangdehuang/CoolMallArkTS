@@ -69,7 +69,7 @@ export struct MainPage {
       }.tabBar(this.tabBarItem(2));
 
       TabContent() {
-        MePage();
+        MePage({ currentPageIndex: this.vm.currentPageIndex });
       }.tabBar(this.tabBarItem(3));
     }
     .width(P100)

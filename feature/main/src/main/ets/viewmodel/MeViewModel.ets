@@ -14,7 +14,6 @@ import {
   navigateTo
 } from "navigation";
 import { MeMenuItem } from "../model/MeMenuItem";
-import { OrderStatusItem } from "../model/OrderStatusItem";
 
 /**
  * @file 我的页面 ViewModel
@@ -109,64 +108,12 @@ export default class MeViewModel extends BaseViewModel {
     if (!this.userState.isLoggedIn()) {
       return;
     }
-    RequestHelper.repository<object>(this.orderRepository.getUserOrderCount())
+    RequestHelper.repository<OrderCount>(this.orderRepository.getUserOrderCount())
       .toast(false)
       .execute()
-      .then((data: object): void => {
+      .then((data: OrderCount): void => {
         this.orderCount = OrderCount.fromResponse(data);
       });
-  }
-
-  /**
-   * 获取订单状态列表
-   * @returns {OrderStatusItem[]} 订单状态列表
-   */
-  getOrderStatusItems(): OrderStatusItem[] {
-    return [
-      {
-        icon: $r("app.media.ic_pay"),
-        label: $r("app.string.pending_payment"),
-        count: this.orderCount.pendingPayment,
-        tabIndex: 1
-      },
-      {
-        icon: $r("app.media.ic_receipt"),
-        label: $r("app.string.pending_shipment"),
-        count: this.orderCount.pendingShipment,
-        tabIndex: 2
-      },
-      {
-        icon: $r("app.media.ic_logistics"),
-        label: $r("app.string.pending_receipt"),
-        count: this.orderCount.pendingReceive,
-        tabIndex: 3
-      },
-      {
-        icon: $r("app.media.ic_message"),
-        label: $r("app.string.pending_review"),
-        count: this.orderCount.pendingReview,
-        tabIndex: 4
-      },
-      {
-        icon: $r("app.media.ic_refund"),
-        label: $r("app.string.refund_after_sale"),
-        // 退款中 + 已退款合并展示
-        count: this.orderCount.refunding + this.orderCount.refunded,
-        tabIndex: 5
-      }
-    ];
-  }
-
-  /**
-   * 格式化徽标数量
-   * @param {number} count - 原始数量
-   * @returns {string} 展示文本
-   */
-  formatBadgeCount(count: number): string {
-    if (count > 99) {
-      return "99+";
-    }
-    return `${count}`;
   }
 
   /**

@@ -47,6 +47,21 @@ export struct MePage {
    */
   @Local
   private userState: UserState = getUserState();
+  /**
+   * main 页面当前选中的页面索引
+   */
+  @Param
+  currentPageIndex: number = 0
+
+  /**
+   * 监听 main 页面当前选中的页面索引变化
+   */
+  @Monitor('currentPageIndex')
+  onValueChange() {
+    if (this.currentPageIndex === 3) {
+      this.vm.getUserOrderStatistics()
+    }
+  }
 
   /**
    * 构建我的页面
@@ -295,9 +310,36 @@ export struct MePage {
   @Builder
   private buildOrderStatusRow(): void {
     Row() {
-      ForEach(this.vm.getOrderStatusItems(), (item: OrderStatusItem): void => {
-        this.buildOrderStatusItem(item);
-      }, (item: OrderStatusItem, index: number): string => `${index}`);
+      this.buildOrderStatusItem({
+        icon: $r("app.media.ic_pay"),
+        label: $r("app.string.pending_payment"),
+        count: this.vm.orderCount.pendingPayment,
+        tabIndex: 1
+      });
+      this.buildOrderStatusItem({
+        icon: $r("app.media.ic_receipt"),
+        label: $r("app.string.pending_shipment"),
+        count: this.vm.orderCount.pendingShipment,
+        tabIndex: 2
+      });
+      this.buildOrderStatusItem({
+        icon: $r("app.media.ic_logistics"),
+        label: $r("app.string.pending_receipt"),
+        count: this.vm.orderCount.pendingReceive,
+        tabIndex: 3
+      });
+      this.buildOrderStatusItem({
+        icon: $r("app.media.ic_message"),
+        label: $r("app.string.pending_review"),
+        count: this.vm.orderCount.pendingReview,
+        tabIndex: 4
+      });
+      this.buildOrderStatusItem({
+        icon: $r("app.media.ic_refund"),
+        label: $r("app.string.refund_after_sale"),
+        count: this.vm.orderCount.refunding + this.vm.orderCount.refunded,
+        tabIndex: 5
+      });
     }
     .width(P100)
     .alignItems(VerticalAlign.Center);
@@ -311,19 +353,13 @@ export struct MePage {
   @Builder
   private buildOrderStatusItem(item: OrderStatusItem): void {
     Column() {
-      if (item.count > 0) {
-        IBestBadge({
-          content: this.vm.formatBadgeCount(item.count),
-          color: $r("app.color.danger"),
-          badgePosition: "top-right"
-        }) {
-          CommonIcon({
-            icon: item.icon,
-            iconSize: 24,
-            tintColor: $r("app.color.text_primary")
-          });
-        }
-      } else {
+      IBestBadge({
+        content: item.count,
+        max: 99,
+        showZero: false,
+        color: $r("app.color.danger"),
+        badgePosition: "top-right"
+      }) {
         CommonIcon({
           icon: item.icon,
           iconSize: 24,
