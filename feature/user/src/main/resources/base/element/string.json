@@ -89,6 +89,10 @@
       "value": "请填写手机号码"
     },
     {
+      "name": "invalid_phone_number",
+      "value": "请输入正确的手机号码"
+    },
+    {
       "name": "region",
       "value": "省市区"
     },
@@ -99,6 +103,10 @@
     {
       "name": "detail_address",
       "value": "详细地址"
+    },
+    {
+      "name": "please_input_detail_address",
+      "value": "请填写详细地址"
     },
     {
       "name": "street_number_etc",

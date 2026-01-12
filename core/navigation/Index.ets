@@ -39,6 +39,10 @@ export {
 
 export { UserAddressDetailParam, UserAddressListParam } from "./src/main/ets/user/UserParam";
 
+export { UserSelectAddressResult } from "./src/main/ets/user/UserResult";
+
+export { RefreshResult } from "./src/main/ets/NavigationResult";
+
 export { LaunchGuideParam } from "./src/main/ets/launch/LaunchParam";
 
 export { MainCartParam } from "./src/main/ets/main/MainParam";

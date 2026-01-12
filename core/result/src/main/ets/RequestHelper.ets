@@ -110,7 +110,7 @@ export class RequestHelper<T> {
     try {
       const rawResp: NetworkResponse<T> = await this.source;
       const resp: NetworkResponse<T> = new NetworkResponse<T>(rawResp);
-      if (resp.isSucceeded && resp.data !== null) {
+      if (resp.isSucceeded) {
         if (returnFull) {
           return resp;
         }

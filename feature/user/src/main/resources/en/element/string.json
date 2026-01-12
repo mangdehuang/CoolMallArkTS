@@ -89,6 +89,10 @@
       "value": "Please enter phone number"
     },
     {
+      "name": "invalid_phone_number",
+      "value": "Please enter a valid phone number"
+    },
+    {
       "name": "region",
       "value": "Region"
     },
@@ -99,6 +103,10 @@
     {
       "name": "detail_address",
       "value": "Detail Address"
+    },
+    {
+      "name": "please_input_detail_address",
+      "value": "Please enter detail address"
     },
     {
       "name": "street_number_etc",

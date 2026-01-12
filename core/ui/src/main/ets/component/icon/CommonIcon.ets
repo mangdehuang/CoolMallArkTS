@@ -31,16 +31,29 @@ export struct CommonIcon {
    */
   build(): void {
     if (this.tintColor !== undefined) {
-      Image(this.icon)
-        .width(this.iconSize)
-        .height(this.iconSize)
-        .fillColor(this.tintColor)
-        .onClick((): void => this.handleTap());
+      if (this.onTap) {
+        Image(this.icon)
+          .width(this.iconSize)
+          .height(this.iconSize)
+          .fillColor(this.tintColor)
+          .onClick((): void => this.handleTap());
+      } else {
+        Image(this.icon)
+          .width(this.iconSize)
+          .height(this.iconSize)
+          .fillColor(this.tintColor);
+      }
     } else {
-      Image(this.icon)
-        .width(this.iconSize)
-        .height(this.iconSize)
-        .onClick((): void => this.handleTap());
+      if (this.onTap) {
+        Image(this.icon)
+          .width(this.iconSize)
+          .height(this.iconSize)
+          .onClick((): void => this.handleTap());
+      } else {
+        Image(this.icon)
+          .width(this.iconSize)
+          .height(this.iconSize);
+      }
     }
   }
 

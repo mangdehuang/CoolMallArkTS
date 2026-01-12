@@ -1,7 +1,7 @@
+import { IBestDialog } from "ibestui";
 import { BaseNetWorkListUiState } from "base";
 import { ColumnBase, ColumnStart, P100 } from "designsystem";
 import { Address } from "model";
-import { UserNavigator } from "navigation";
 import { getWindowSafeAreaState, WindowSafeAreaState } from "state";
 import {
   AddressActionButton,
@@ -58,10 +58,22 @@ export struct AddressListPage {
         if (this.vm.shouldShowBottomButton()) {
           AppBottomButton({
             text: $r("app.string.address_add_new"),
-            onTap: (): void => UserNavigator.toAddressDetail()
+            onTap: (): void => this.vm.onAddAddress()
           });
         }
       }
+
+      IBestDialog({
+        visible: this.vm.isDeleteDialogVisible,
+        title: $r("app.string.delete_address"),
+        message: $r("app.string.delete_address_confirm"),
+        showCancelButton: true,
+        confirmButtonText: $r("app.string.ok"),
+        cancelButtonText: $r("app.string.cancel"),
+        onConfirm: (): void => this.vm.deleteAddress(),
+        onCancel: (): void => this.vm.hideDeleteDialog(),
+        onClose: (): void => this.vm.hideDeleteDialog()
+      });
     }
   }
 
@@ -82,7 +94,7 @@ export struct AddressListPage {
           ListItem() {
             this.AddressListItem(item);
           }
-        }, (item: Address): string => `${item.id}`);
+        }, (item: Address): string => JSON.stringify(item));
       }
       .width(P100)
       .height(P100)
