@@ -1,5 +1,6 @@
 import { ColumnStart, P100, SpaceVerticalMedium } from "designsystem";
 import { Goods } from "model";
+import { navigateBack } from "navigation";
 import { getWindowSafeAreaState, WindowSafeAreaState } from "state";
 import { AppNavDestination, BaseNetWorkView } from "ui";
 import { GoodsBanner } from "../component/GoodsBanner";
@@ -10,6 +11,7 @@ import { GoodsShippingServiceCard } from "../component/GoodsShippingServiceCard"
 import GoodsDetailViewModel from "../viewmodel/GoodsDetailViewModel";
 import { GoodsDetailRichHeader } from "../component/GoodsDetailRichHeader";
 import { GoodsDetailRichImageItem } from "../component/GoodsDetailRichImageItem";
+import { GoodsDetailTopBar } from "../component/GoodsDetailTopBar";
 
 /**
  * @file 商品详情页面视图
@@ -22,6 +24,10 @@ export struct GoodsDetailPage {
    */
   @Local
   private vm: GoodsDetailViewModel = new GoodsDetailViewModel();
+  /**
+   * 列表滚动控制器
+   */
+  private listScroller: Scroller = new Scroller();
   /**
    * 当前窗口安全区状态
    */
@@ -55,9 +61,17 @@ export struct GoodsDetailPage {
    */
   @Builder
   private GoodsDetailContent() {
-    ColumnStart({ fillMaxSize: true }) {
-      this.GoodsDetailList();
-      GoodsDetailBottomBar();
+    Stack({ alignContent: Alignment.TopStart }) {
+      ColumnStart({ fillMaxSize: true }) {
+        this.GoodsDetailList();
+        GoodsDetailBottomBar();
+      }
+
+      GoodsDetailTopBar({
+        topBarAlpha: this.vm.topBarAlpha,
+        topInset: this.windowSafeAreaState.topInset,
+        onBackClick: (): void => navigateBack()
+      });
     }
   }
 
@@ -67,7 +81,7 @@ export struct GoodsDetailPage {
    */
   @Builder
   private GoodsDetailList(): void {
-    List() {
+    List({ scroller: this.listScroller }) {
       ListItem() {
         GoodsBanner({
           bannerList: this.vm.data?.goodsInfo?.pics ?? [],
@@ -131,6 +145,23 @@ export struct GoodsDetailPage {
     }
     .layoutWeight(1)
     .width(P100)
-    .height(P100);
+    .height(P100)
+    .onDidScroll((scrollOffset: number): void => {
+      this.onScrollChanged(scrollOffset);
+    });
+  }
+
+  /**
+   * 列表滚动距离回调
+   * @param {number} scrollOffset - 当前滚动距离
+   * @returns {void} 无返回值
+   */
+  private onScrollChanged(scrollOffset: number): void {
+    const offset = this.listScroller.currentOffset();
+    if (offset) {
+      this.vm.updateTopBarAlpha(scrollOffset, offset.yOffset);
+    } else {
+      this.vm.updateTopBarAlpha(scrollOffset);
+    }
   }
 }
