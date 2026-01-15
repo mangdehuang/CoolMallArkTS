@@ -1,4 +1,5 @@
 import { P100 } from "designsystem";
+import { bp } from "state";
 
 /**
  * @file 商品详情轮播图组件
@@ -26,6 +27,11 @@ export struct GoodsBanner {
    */
   @Param
   imageFit: ImageFit = ImageFit.Cover;
+  /**
+   * 是否使用 1:1 比例
+   */
+  @Param
+  useSquareRatio: boolean = true;
 
   /**
    * 构建轮播图视图
@@ -50,7 +56,22 @@ export struct GoodsBanner {
       .loop(this.loop)
       .width(P100)
       .height(P100)
-      .aspectRatio(1);
+      .attributeModifier(this.getAspectRatioModifier());
     }
+  }
+
+  /**
+   * 获取轮播图比例修饰器
+   * @returns {AttributeModifier<SwiperAttribute>} 属性修饰器
+   */
+  private getAspectRatioModifier(): AttributeModifier<SwiperAttribute> {
+    const ratio = bp({ xs: 1, sm: 1, md: 1.2, lg: 1 });
+    return {
+      applyNormalAttribute: (instance: SwiperAttribute): void => {
+        if (this.useSquareRatio) {
+          instance.aspectRatio(ratio);
+        }
+      }
+    };
   }
 }

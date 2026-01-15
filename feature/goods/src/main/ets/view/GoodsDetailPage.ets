@@ -1,7 +1,7 @@
-import { ColumnStart, P100, SpaceVerticalMedium } from "designsystem";
+import { ColumnStart, P100, P50, RowStartTop, SpaceVerticalMedium } from "designsystem";
 import { Goods } from "model";
 import { navigateBack } from "navigation";
-import { getWindowSafeAreaState, WindowSafeAreaState } from "state";
+import { BreakpointState, getBreakpointState, getWindowSafeAreaState, WindowSafeAreaState } from "state";
 import { AppNavDestination, BaseNetWorkView } from "ui";
 import { GoodsBanner } from "../component/GoodsBanner";
 import { GoodsDetailBottomBar } from "../component/GoodsDetailBottomBar";
@@ -33,6 +33,11 @@ export struct GoodsDetailPage {
    */
   @Param
   private windowSafeAreaState: WindowSafeAreaState = getWindowSafeAreaState();
+  /**
+   * 屏幕断点状态
+   */
+  @Local
+  private breakpointState: BreakpointState = getBreakpointState();
 
   /**
    * 构建商品详情页面
@@ -62,13 +67,14 @@ export struct GoodsDetailPage {
   @Builder
   private GoodsDetailContent() {
     Stack({ alignContent: Alignment.TopStart }) {
-      ColumnStart({ fillMaxSize: true }) {
-        this.GoodsDetailList();
-        GoodsDetailBottomBar();
+      if (this.breakpointState.isLG()) {
+        this.GoodsDetailLargeLayout();
+      } else {
+        this.GoodsDetailSmallLayout();
       }
 
       GoodsDetailTopBar({
-        topBarAlpha: this.vm.topBarAlpha,
+        topBarAlpha: this.breakpointState.isLG() ? 0 : this.vm.topBarAlpha,
         topInset: this.windowSafeAreaState.topInset,
         onBackClick: (): void => navigateBack()
       });
@@ -76,23 +82,67 @@ export struct GoodsDetailPage {
   }
 
   /**
-   * 商品详情滚动列表
+   * 小屏商品详情布局
    * @returns {void} 无返回值
    */
   @Builder
-  private GoodsDetailList(): void {
-    List({ scroller: this.listScroller }) {
-      ListItem() {
+  private GoodsDetailSmallLayout(): void {
+    ColumnStart({ fillMaxSize: true }) {
+      this.GoodsDetailList(true);
+      GoodsDetailBottomBar();
+    }
+  }
+
+  /**
+   * 大屏商品详情布局（左右等分）
+   * @returns {void} 无返回值
+   */
+  @Builder
+  private GoodsDetailLargeLayout(): void {
+    RowStartTop({ fillMaxSize: true }) {
+      ColumnStart({ widthValue: P50, heightValue: P100 }) {
         GoodsBanner({
           bannerList: this.vm.data?.goodsInfo?.pics ?? [],
           autoPlay: false,
           loop: false,
-          imageFit: ImageFit.Cover
+          imageFit: ImageFit.Cover,
+          useSquareRatio: false
         });
       }
 
-      ListItem() {
-        SpaceVerticalMedium();
+      ColumnStart({ widthValue: P50, heightValue: P100 }) {
+        Blank().height(this.windowSafeAreaState.topInset ?? 0);
+        this.GoodsDetailList(false);
+        GoodsDetailBottomBar();
+      }
+    }
+  }
+
+  /**
+   * 商品详情滚动列表
+   * @param {boolean} showBanner - 是否展示轮播图
+   * @returns {void} 无返回值
+   */
+  @Builder
+  private GoodsDetailList(showBanner: boolean): void {
+    List({ scroller: this.listScroller }) {
+      if (showBanner) {
+        ListItem() {
+          GoodsBanner({
+            bannerList: this.vm.data?.goodsInfo?.pics ?? [],
+            autoPlay: false,
+            loop: false,
+            imageFit: ImageFit.Cover
+          });
+        }
+
+        ListItem() {
+          SpaceVerticalMedium();
+        }
+      } else {
+        ListItem() {
+          SpaceVerticalMedium();
+        }
       }
 
       ListItem() {
@@ -147,7 +197,9 @@ export struct GoodsDetailPage {
     .width(P100)
     .height(P100)
     .onDidScroll((scrollOffset: number): void => {
-      this.onScrollChanged(scrollOffset);
+      if (!this.breakpointState.isLG()) {
+        this.onScrollChanged(scrollOffset);
+      }
     });
   }
 
